@@ -8,10 +8,9 @@ export default class ChessAI {
     #color;
     #depth;
 
-    constructor(board, color = ChessPiece.BLACK, depth = 3) {
+    constructor(board, color = ChessPiece.BLACK) {
         this.#board = board;
         this.#color = color;
-        this.#depth = depth;
     }
 
     takeTurn() {
@@ -31,21 +30,4 @@ export default class ChessAI {
 
         this.#board.makeMove(randomBestPiece.piece, randomBestMove.rank, randomBestMove.file, true);
     }
-
-    getBestMove() {
-        let pieces = this.#board.getPiecesByColor(this.#color);
-        let moves = pieces.map(piece => ChessMove.getLegalMoves(this.#board, piece));
-
-        moves.forEach((move, index) => {
-            let boardCopy = this.#board.copy();
-
-            boardCopy.makeMove(move.piece, move.rank, move.file, true);
-        });
-
-
-
-    }
-
-
-
 }
