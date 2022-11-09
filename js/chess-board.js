@@ -85,19 +85,19 @@ export default class ChessBoard {
     }
 
     playerIsCheckmate(color) {
-        if (!this.playerIsInCheck(color)) return false;
+        return this.playerIsInCheck(color) && this.playerHasNoLegalMoves(color);
+    }
 
+    playerHasNoLegalMoves(color) {
         let pieces = this.getPiecesByColor(color);
 
         for (let piece of pieces) {
-            if (ChessMove.getLegalMoves(this, piece).length > 0) {
-                console.log(ChessMove.getLegalMoves(this, piece));
-                return false;
-            }
+            if (ChessMove.getLegalMoves(this, piece).length > 0) return false;
         }
 
         return true;
     }
+
 
 
     #showLegalMoves(piece) {
@@ -223,7 +223,7 @@ export default class ChessBoard {
     makeMove(piece, rank, file, select = false) {
 
         if (select) this.#selectedPiece = piece;
-        
+
         if (this.#turn === this.#selectedPiece?.color && this.#selectedPiece.isLegalMove(this, rank, file)) {
 
             if (this.getPiece(rank, file)?.color === this.#selectedPiece.oppositeColor) {
@@ -245,8 +245,16 @@ export default class ChessBoard {
             this.#updateBoard();
             this.#removeHighlighting();
 
-            this.#selectedPiece = null;
-            this.nextTurn();
+            if (this.playerIsCheckmate(this.#selectedPiece.oppositeColor)) {
+                setTimeout(() => alert(`${this.#selectedPiece.color} wins!`), 100);
+                this.#turn = null;
+            } else if (this.playerHasNoLegalMoves(this.#selectedPiece.oppositeColor)) {
+                setTimeout(() => alert(`Stalemate!\n${this.#selectedPiece.oppositeColor} has no legal moves.`), 100);
+                this.#turn = null;
+            } else {
+                this.#selectedPiece = null;
+                this.nextTurn();
+            }
         } else if (this.#turn === piece?.color) {
             this.#selectedPiece = piece;
             this.#showLegalMoves(piece);

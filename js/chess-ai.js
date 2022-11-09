@@ -24,8 +24,10 @@ export default class ChessAI {
         let bestmoves = moves.filter(move => move.value === moves[0].value);
 
         let randomBestPiece = bestmoves[Math.floor(Math.random() * bestmoves.length)];
-        let randomBestMove = randomBestPiece.moves[Math.floor(Math.random() * randomBestPiece.moves.length)];
 
-        this.#board.makeMove(randomBestPiece.piece, randomBestMove.rank, randomBestMove.file, true);
+        if (randomBestPiece !== undefined) {
+            let randomBestMove = randomBestPiece.moves[Math.floor(Math.random() * randomBestPiece.moves.length)];
+            this.#board.makeMove(randomBestPiece.piece, randomBestMove.rank, randomBestMove.file, true);
+        }
     }
 }
