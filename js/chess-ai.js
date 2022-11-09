@@ -1,12 +1,10 @@
 import { ChessPiece } from "./chess-piece.js";
-import ChessBoard from "./chess-board.js";
 import ChessMove from "./chess-move.js";
 
 export default class ChessAI {
 
     #board;
     #color;
-    #depth;
 
     constructor(board, color = ChessPiece.BLACK) {
         this.#board = board;

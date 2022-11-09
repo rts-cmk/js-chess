@@ -18,6 +18,8 @@ export default class ChessBoard {
 
     #ai;
 
+    aiOpponent;
+
     get element() { return this.#element; };
     get lastMove() { return this.#lastMove; };
     get pieces() { return this.#pieces; };
@@ -37,6 +39,7 @@ export default class ChessBoard {
         this.#turn = ChessPiece.WHITE;
 
         this.#ai = new ChessAI(this);
+        this.aiOpponent = true;
 
         ChessBoard.FILES.reverse().forEach(file => {
             let row = document.createElement('tr');
@@ -72,7 +75,7 @@ export default class ChessBoard {
     nextTurn() {
         this.#turn = this.#turn === ChessPiece.WHITE ? ChessPiece.BLACK : ChessPiece.WHITE;
 
-        if (this.#turn === ChessPiece.BLACK) this.#ai.takeTurn();
+        if (this.aiOpponent && this.#turn === ChessPiece.BLACK) this.#ai.takeTurn();
     }
 
     playerIsInCheck(color) {
@@ -221,8 +224,6 @@ export default class ChessBoard {
 
         if (select) this.#selectedPiece = piece;
         
-        if (this.#turn === ChessPiece.BLACK) console.log(`AI move: ${piece.type} ${piece.rank}${piece.file} -> ${rank}${file}`);
-
         if (this.#turn === this.#selectedPiece?.color && this.#selectedPiece.isLegalMove(this, rank, file)) {
 
             if (this.getPiece(rank, file)?.color === this.#selectedPiece.oppositeColor) {
