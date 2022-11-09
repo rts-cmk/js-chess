@@ -255,6 +255,7 @@ export default class ChessBoard {
                 this.#selectedPiece = null;
                 this.nextTurn();
             }
+            
         } else if (this.#turn === piece?.color) {
             this.#selectedPiece = piece;
             this.#showLegalMoves(piece);

@@ -29,5 +29,6 @@ export default class ChessAI {
             let randomBestMove = randomBestPiece.moves[Math.floor(Math.random() * randomBestPiece.moves.length)];
             this.#board.makeMove(randomBestPiece.piece, randomBestMove.rank, randomBestMove.file, true);
         }
+        
     }
 }
