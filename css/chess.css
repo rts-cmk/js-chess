@@ -1,0 +1,88 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: rgb(53, 52, 71);
+
+}
+
+.chess-board {
+    margin: 20px auto;
+    min-width: 600px;
+    border-collapse: collapse;
+    text-align: center;
+    box-shadow: 0 0 0 2px black;
+}
+
+.chess-board__square {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    background-color: rgb(202, 138, 104);
+    border: none;
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1), inset 0 0 40px 1px rgba(0, 0, 0, 0.2);
+    font-size: 70px;
+    line-height: 80px;
+    overflow: hidden;
+    user-select: none;
+    color: rgb(240, 207, 192);
+    text-shadow: 0 0 2px black;
+    cursor: not-allowed;
+    transition: box-shadow 0.2s ease-in-out;
+}
+
+.chess-board__row:nth-child(odd) .chess-board__square:nth-child(odd),
+.chess-board__row:nth-child(even) .chess-board__square:nth-child(even) {
+    background-color: rgb(123, 85, 62);
+}
+
+
+.chess-board__square[data-color="black"] { 
+    color: rgb(42, 27, 19); 
+    text-shadow: 0 0 1px rgb(171, 116, 87);
+}
+
+.chess-board__square[data-piece],
+.chess-board__square--selected { 
+    cursor: pointer; 
+}
+
+.chess-board__square--highlighted { cursor: move; }
+.chess-board__square[data-piece].chess-board__square--capture,
+.chess-board__square--capture { cursor: crosshair; }
+
+.chess-board__square::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.chess-board__square--highlighted::before {
+    background-color: rgba(0, 255, 0, 0.2);
+}
+
+.chess-board__square--selected::before {
+    background-color: rgba(0, 0, 255, 0.2);
+}
+
+.chess-board__square--capture::before {
+    background-color: rgba(255, 0, 255, 0.3);
+}
+
+.chess-board__square--check::before {
+    background-color: rgba(255, 0, 0, 0.5);
+}
+
+.chess-board__square[data-piece="pawn"]::before { content: "♟︎"; }
+.chess-board__square[data-piece="rook"]::before { content: "♜"; }
+.chess-board__square[data-piece="knight"]::before { content: "♞"; }
+.chess-board__square[data-piece="bishop"]::before { content: "♝"; }
+.chess-board__square[data-piece="queen"]::before { content: "♛"; }
+.chess-board__square[data-piece="king"]::before { content: "♚"; }
